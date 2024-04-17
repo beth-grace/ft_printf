@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scase.c                                            :+:      :+:    :+:   */
+/*   readit.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmilford <bmilford@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/15 14:20:21 by bmilford          #+#    #+#             */
-/*   Updated: 2024/04/15 14:24:46 by bmilford         ###   ########.fr       */
+/*   Created: 2024/04/17 15:35:22 by bmilford          #+#    #+#             */
+/*   Updated: 2024/04/17 16:14:54 by bmilford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	scase(char s)
+void	read(char string)
 {
-	write(1, s, ft_strlen);
+	int	index;
+	
+	index = 0;
+	while(string)
+	{
+		if (string[index] == %)
+			return(check_case(index, string));
+		index++;
+	}
+	return (0);
 }
