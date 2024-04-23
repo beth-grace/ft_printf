@@ -27,6 +27,7 @@ clean :
 
 fclean : clean
 	rm -f $(NAME)
+	rm -f libft.h
 
 re : clean all
 .PHONY : all clean fclean re
