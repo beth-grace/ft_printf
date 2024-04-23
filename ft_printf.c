@@ -6,49 +6,58 @@
 /*   By: bmilford <bmilford@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:42:23 by bmilford          #+#    #+#             */
-/*   Updated: 2024/04/22 17:35:18 by bmilford         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:48:49 by bmilford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdargs.h>
-#include "libft"
-int	ft_printf(const char num_args, ...)
+
+int	ft_printf(const char *format, ...)
 {
 	va_list args;
 	int		index;
 
 	index = 0;
-	va_start (args, num_args);
-	while (index < num_args)
-		index++;
-}
-void	checkcase(char cases, va_list args)
-	int	num_args = (ft_strlen(cases) / 2)
-	int	index;
-
-	index = 0;
-	while (cases)
+	va_start(args, format);
+	while (format[index])
 	{
-		if (cases[index] == '%' && cases[index + 1] == '%')
-			ft_putchar_fd('%')
-		else if (cases[index] == '%' && cases[index + 1] == 'c')
-			ft_putchar_fd(va_arg(args, int));
-		else if (cases[index] == '%' && cases[index + 1] == 's')
-			ft_putstr_fd(va_arg(args, char*));
-		else if (cases[index] == '%' && cases[index + 1] == 'p')
-			write(fd,va_arg(args, unsigned long int), ft_putnbr(args));
-		else if (cases[index] == '%' && cases[index + 1] == 'd')
-			ft_putnbr_fd(va_arg(args, int));
-		else if (cases[index] == '%' && cases[index + 1] == 'i')
-		{
-		}
-		else if (cases[index] == '%' && cases[index + 1] == 'u')
-			ft_putnbr_fd(va_args(args, unsigned int));
-		else if (cases[index] == '%' && cases[index + 1] == 'x')
-		{
-		}
-		else if (cases[index] == '%' && cases[index + 1] == 'X')
-		{
-		}
+		if (format[index] == '%')
+			checkcase(format[++index], args);
+		else
+			write(1, format + index, 1);
 		index++;
 	}
+	va_end(args);
+	return (1);
+}
 
+void	checkcase(char cases, va_list args)
+{
+	if (cases == '%')
+		ft_putchar_fd('%', 1);
+	else if (cases == 'c')
+		ft_putchar_fd(va_arg(args, int), 1);
+	else if (cases == 's')
+		ft_putstr_fd(va_arg(args, char*), 1);
+	else if (cases == 'p')
+		ft_putptr_fd(va_arg(args, size_t), 1);
+	else if (cases == 'd')
+		ft_putnbr_fd(va_arg(args, int), 1);
+	else if (cases == 'i')
+		ft_putnbr_fd(va_arg(args, int), 1);
+	else if (cases == 'u')
+		ft_putunbr_fd(va_arg(args, unsigned int), 1);
+	else if (cases == 'x')
+		ft_puthex_fd(va_arg(args, unsigned int),
+			"0123456789abcdef", 1);
+	else if (cases == 'X')
+		ft_puthex_fd(va_arg(args, unsigned int),
+			"0123456789ABCDEF", 1);
+}
+
+int	ft_putptr_fd(size_t n, int fd)
+{
+	int	t;
+
+	t = ft_putstr_fd("0x", fd);
+	t += ft_puthex_fd(n, "0123456789ABCDEF", fd);
+	return (t);
+}

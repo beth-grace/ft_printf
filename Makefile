@@ -1,16 +1,23 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -I. -c
 NAME = libftprintf.a
-SRC = check_case.c\
-	readit.c\
-	ft_printf.c\
-	libft.h\
+
+SRC = ft_printf.c
+
 OBJ = $(patsubst %.c,%.o,$(SRC))
+
+LIBFT = libft.a
 
 all : $(NAME)
 
-$(NAME) : $(OBJ)
+$(NAME) : $(LIBFT) $(OBJ)
+	mv libft.a $(NAME)
 	ar -r $(NAME) $(OBJ)
+
+$(LIBFT) :
+	$(MAKE) -C libft
+	cp libft/libft.h libft.h
+	mv libft/libft.a libft.a
 
 $(OBJ): $(SRC)
 	cc $(CFLAGS) $(SRC)

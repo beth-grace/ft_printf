@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_case.c                                       :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmilford <bmilford@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 16:09:13 by bmilford          #+#    #+#             */
-/*   Updated: 2024/04/19 12:35:32 by bmilford         ###   ########.fr       */
+/*   Created: 2024/04/23 16:48:26 by bmilford          #+#    #+#             */
+/*   Updated: 2024/04/23 16:48:53 by bmilford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	check_case(int index, char string, char out)
-{
-	if (index + 1 == '%')
-		write(1, '%', 1);
-	else if (index + 1 == 'c')
-		write(1, out, 1);
-	else if (index + 1 == 's')
-		write(1, out, ft_strlen(out));
-	else if (index ++ 1 == 'p')
-		write(1,ft_atoi(out), ft_strlen(out));
-	else
-		return 0;
-}
+#include <stdarg.h>
+#include "libft.h"
+
+void	checkcase(char cases, va_list args);
+int		ft_putptr_fd(size_t n, int fd);
+int		ft_printf(const char *format, ...);
