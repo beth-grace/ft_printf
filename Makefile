@@ -1,5 +1,5 @@
-CC = gcc
-CFLAGS = -Wall -Werror -Wextra -I. -c
+CC = cc
+CFLAGS = -Wall -Werror -Wextra
 NAME = libftprintf.a
 
 SRC = ft_printf.c
@@ -8,26 +8,31 @@ OBJ = $(patsubst %.c,%.o,$(SRC))
 
 LIBFT = libft.a
 
-all : $(NAME)
+all: $(NAME)
 
-$(NAME) : $(LIBFT) $(OBJ)
-	mv libft.a $(NAME)
-	ar -r $(NAME) $(OBJ)
+$(NAME): $(LIBFT) $(OBJ)
+	@echo "<$(NAME)> MAKING $(NAME)"
+	@cp $(LIBFT) $(NAME)
+	@ar rcs $(NAME) $(OBJ)
 
-$(LIBFT) :
-	$(MAKE) -C libft
-	cp libft/libft.h libft.h
-	mv libft/libft.a libft.a
+$(LIBFT):
+	@$(MAKE) -C libft
+	@echo "<$(NAME)> MOVING HEADER AND ARCHIVE OUT"
+	@cp libft/libft.h libft.h
+	@mv libft/libft.a libft.a
 
-$(OBJ): $(SRC)
-	cc $(CFLAGS) $(SRC)
+%.o: %.c
+	@echo "<$(NAME)> COMPILING $@"
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-clean :
-	rm -f $(OBJ)
+clean:
+	@rm -f $(OBJ)
+	@rm -f $(LIBFT)
 
-fclean : clean
-	rm -f $(NAME)
-	rm -f libft.h
+fclean: clean
+	@rm -f $(NAME)
+	@rm -f libft.h
 
-re : clean all
+re: fclean all
+
 .PHONY : all clean fclean re
